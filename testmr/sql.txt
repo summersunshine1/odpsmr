@@ -1,0 +1,27 @@
+select t.id,t.word,t.count,t.risk,sum(t.count) as riskcount from ${t1} t group by t.risk;
+select t.id,t.word,t.count,t.risk,t.riskcount, sum(t.count) as riskwordcount from ${t1} t group by t.risk,t.word;
+select t.id,t.word,t.count,t.risk,t.riskcount,t.riskwordcount, sum(t.count) as totalcount from ${t1} t;
+select t.id,t.word,t.count,t.risk,t.riskcount,t.riskwordcount, t.totalcount, count(distinct t.word) as totalwordcount from ${t1} t;
+select t.id,t.word,t.count,t.risk,t.riskcount,t.riskwordcount, t.totalcount, t.totalwordcount from ${t1} t group by;
+
+create table riskwordcount_table as select t.risk,t.word,sum(t.count) as riskwordcount from ${t1} t group by t.word,t.risk;
+select * from riskwordcount_table;
+
+create table riskcount_table as select t.risk,sum(t.riskwordcount) as riskcount,count(distinct t.word) as riskwordtotalcount from riskwordcount_table t group by t.risk;
+select t.risk,t.word,t.riskwordcount,r.riskcount,r.riskwordtotalcount from riskwordcount_table t join riskcount_table r on t.risk=r.risk;
+
+create table wordcount_table as select t.word, sum(t.riskwordcount) as wordcount from riskwordcount_table t group by t.word;
+select t.risk,t.word,t.riskwordcount,t.riskcount,t.riskwordtotalcount,r.wordcount from ${t1} t join wordcount_table r on t.word = r.word;
+
+create table total_table as select t.risk,t.word,t.riskwordcount,t.riskcount,t.riskwordtotalcount,t.wordcount,sum(t.riskwordcount) as totalcount,count(distinct t.word) as wordtotalcount from ${t1} t;
+select * from total_table;
+
+select risk,word from mutual_info_out where minfo>threshold and risk="sexy"
+insert into table keywords select risk,word from mutual_info_out where minfo>threshold and risk="sexy"
+
+select distinct word from keywords
+
+
+
+
+

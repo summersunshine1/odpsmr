@@ -1,0 +1,3 @@
+project=local
+table=html_in
+columns=id:STRING,html:STRING,risk:STRING

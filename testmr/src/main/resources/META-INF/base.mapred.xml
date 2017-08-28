@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapred>
+    <!-- profile -->
+    <baseId>1</baseId>
+    <projectId>1</projectId>
+    <resourceName>testmr</resourceName>
+    <idePath>workflow/myfolder</idePath>
+
+    <!-- classes -->
+    <jobLauncher>test.testmr.JobLauncher</jobLauncher>
+    <mapper>test.testmr.MyMapper</mapper>
+    <reducer>test.testmr.MyReducer</reducer>
+   <!--  <combiner>test.testmr.MyCombiner</combiner> -->
+
+    <!--task-->
+    <mapOutputKey>id:string</mapOutputKey>
+    <mapOutputValue>html:string,risk:string</mapOutputValue>
+    <numReduceTask>1</numReduceTask>
+    
+    <!--
+    <partitionColumns>col1,col2</partitionColumns>
+    <outputKeySortColumns>col1,col2</outputKeySortColumns>
+    <outputGroupingColumns>id:string,words:string,risk:string</outputGroupingColumns>
+    <outputKeySortOrders>ASC,DESC</outputKeySortOrders>
+    
+    
+    <memoryForMapTask>2048</memoryForMapTask>
+    <memoryForReduceTask>2048</memoryForReduceTask>
+    -->
+
+    <!-- tables -->
+    <inputTables>
+        <table>
+            <name>html_in</name>
+           <!--  <partitions>
+                <partition>dt={yyyymmdd}</partition>
+                <partition>dt={yyyymmdd-1}</partition>
+            </partitions> -->
+        </table>
+        <table>
+            <name>html_in2</name>
+           <!--  <partitions>
+                <partition>dt={yyyymmdd}</partition>
+                <partition>dt={yyyymmdd-1}</partition>
+            </partitions> -->
+        </table>
+    </inputTables>
+    <outputTable>
+        <name>html_out</name>
+        <!-- <partition>dt={yyyymmdd}</partition> -->
+    </outputTable>
+</mapred>
