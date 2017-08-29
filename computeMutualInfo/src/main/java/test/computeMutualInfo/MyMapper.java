@@ -14,7 +14,7 @@ public class MyMapper implements Mapper {
     private Record res;
 
     public void setup(TaskContext context) throws IOException {
-        res = context.createMapOutputKeyRecord();
+        res = context.createOutputRecord();
     }
 
     public void map(long recordNum, Record record, TaskContext context) throws IOException {
@@ -22,8 +22,8 @@ public class MyMapper implements Mapper {
     	Long riskcount = record.getBigint("riskcount");
     	Long riskwordtotalcount = record.getBigint("riskwordtotalcount");
     	Long wordcount = record.getBigint("wordcount");
-    	Long totalcount = record.getBigint("totalcount");
-    	Long word_totalcount = record.getBigint("wordtotalcount");
+    	int totalcount = 1787350;
+    	int word_totalcount = 1811;//record.getBigint("wordtotalcount");
     	
     	double wc = (double) ((1+riskwordcount)*1.0/(riskwordtotalcount+riskcount));
     	double w = (double) ((1+wordcount)*1.0/(totalcount+word_totalcount));

@@ -11,10 +11,14 @@ create table riskcount_table as select t.risk,sum(t.riskwordcount) as riskcount,
 select t.risk,t.word,t.riskwordcount,r.riskcount,r.riskwordtotalcount from riskwordcount_table t join riskcount_table r on t.risk=r.risk;
 
 create table wordcount_table as select t.word, sum(t.riskwordcount) as wordcount from riskwordcount_table t group by t.word;
+create table wordcount_table as select t.word, sum(t.riskwordcount) as wordcount from riskwordcount_table t group by t.word having  sum(t.riskwordcount)>500 ;
 select t.risk,t.word,t.riskwordcount,t.riskcount,t.riskwordtotalcount,r.wordcount from ${t1} t join wordcount_table r on t.word = r.word;
 
-create table total_table as select t.risk,t.word,t.riskwordcount,t.riskcount,t.riskwordtotalcount,t.wordcount from ${t1} t;
-select sum(t.riskwordcount) as totalcount,count(distinct t.word) as wordtotalcount from total_table;
+create table filterword_table as select word from {$t1} t group by word having count(distinct t.risk)<=1
+create table total_table as select t.risk,t.word,t.riskwordcount,t.riskcount,t.riskwordtotalcount,r.wordcount from ${t1} t join filterword_table r on t.word=r.word; 
+select * from total_table;
+
+select sum(t.riskwordcount) as totalcount,count(distinct t.word) as wordtotalcount from total_table t;
 
 select risk,word from mutual_info_out where minfo>threshold and risk="sexy"
 insert into table keywords select risk,word from mutual_info_out where minfo>threshold and risk="sexy"
@@ -24,7 +28,16 @@ select distinct word from keywords
 create table total_table_out as select t.risk,t.word,t.riskwordcount,t.riskcount,t.riskwordtotalcount,t.wordcount,b.totalcount,b.wordtotalcount from total_table t full outer join ${t1} b;
 
 alter table total_table add columns(totalcount bigint,wordtotalcount bigint);
-https://edu.cloudcare.cn/courses/d27cfb1d3bb846239c0672f6e9dd2f09/detail
+
+drop table if exists total_table;
+create table total_table as select t.risk,t.word,t.riskwordcount,t.riskcount,t.riskwordtotalcount,r.wordcount from ${t1} t join filterword_table r on t.word=r.word; 
+select * from total_table;
+
+create table filterword_table as select word,count(distinct risk) as uniquerisks from ${t1} t group by word having uniquerisks<=1;
+
+COUNT(DISTINCT Location) AS UniqueLocations
+
+
 
 
 
