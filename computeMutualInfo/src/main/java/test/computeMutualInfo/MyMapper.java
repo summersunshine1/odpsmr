@@ -22,16 +22,17 @@ public class MyMapper implements Mapper {
     	Long riskcount = record.getBigint("riskcount");
     	Long riskwordtotalcount = record.getBigint("riskwordtotalcount");
     	Long wordcount = record.getBigint("wordcount");
-    	int totalcount = 1787350;
-    	int word_totalcount = 1811;//record.getBigint("wordtotalcount");
+    	int totalcount = 87176064;
+    	int word_totalcount = 36684;//record.getBigint("wordtotalcount");
     	
     	double wc = (double) ((1+riskwordcount)*1.0/(riskwordtotalcount+riskcount));
     	double w = (double) ((1+wordcount)*1.0/(totalcount+word_totalcount));
-    	double minfo = Math.log((double)wc)/Math.log((double)w);
+    	double minfo = Math.log((double)wc/(double)w);
     	
     	res.set(0,record.getString("risk"));
     	res.set(1,record.getString("word"));
     	res.set(2,minfo);
+    	res.set(3,riskwordcount);
         context.write(res);
     }
 

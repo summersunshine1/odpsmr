@@ -35,8 +35,27 @@ select * from total_table;
 
 create table filterword_table as select word,count(distinct risk) as uniquerisks from ${t1} t group by word having uniquerisks<=1;
 
-COUNT(DISTINCT Location) AS UniqueLocations
+drop table if exists wordcount_table;
+create table wordcount_table as select t.word, sum(t.riskwordcount) as wordcount from riskwordcount_table t group by t.word having  sum(t.riskwordcount)>50 and sum(t.riskwordcount)<10000;
+select t.risk,t.word,t.riskwordcount,t.riskcount,t.riskwordtotalcount,r.wordcount from ${t1} t join wordcount_table r on t.word = r.word;
 
+drop table if exists nonormal_wordcount_table;
+create table nonormal_wordcount_table as select t.word, sum(t.riskwordcount) as wordcount from riskwordcount_table t where t.risk <> "normal" group by t.word;
+select t.risk,t.word,t.riskwordcount,t.riskcount,t.riskwordtotalcount,r.wordcount from ${t1} t join wordcount_table r on t.word = r.word;
+
+select r.risk,r.word,r.minfo,t.riskwordcount from mutual_info_out_nonormal r join prj_tc_231612_90623_bchbjb.riskwordcount_table t on r.word=t.word and r.risk=t.risk where r.risk='fake_card' and r.word like '%证' order by r.minfo desc limit  100;
+
+drop table if exists train_wordcount_table;
+create table train_wordcount_table as select t.id,t.word,t.count from train1 t join ${t1} r on r.word=t.word;
+select * from train_wordcount_table;
+
+drop table if exists test_wordcount_table;
+create table test_wordcount_table as select t.id,t.word,t.count from test1 t join  ${t1} r on r.word=t.word;
+select * from test_wordcount_table;
+
+select t.id,t.word,t.count,t.tf,t.idf,t.tfidf,t1.risk  from ${t1} t join filterout t1 on t.id=t1.id;
+
+select t.id,t.key_value,t1.risk from ${t1} t join filterout t1 on t.id=t1.id;
 
 
 
