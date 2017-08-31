@@ -55,10 +55,7 @@ public class CommonTool{
 		  Matcher   m   =   p.matcher(str);     
 		  return   m.replaceAll(" ").trim();     
     }
-    public static String gethtml(String html)
-    {
-    	
-    }
+
     public static String parseHtml(String html)
     {
     	//String res = "";

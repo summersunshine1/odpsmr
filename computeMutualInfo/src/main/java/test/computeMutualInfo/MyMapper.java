@@ -28,10 +28,11 @@ public class MyMapper implements Mapper {
     	double wc = (double) ((1+riskwordcount)*1.0/(riskwordtotalcount+riskcount));
     	double w = (double) ((1+wordcount)*1.0/(totalcount+word_totalcount));
     	double minfo = Math.log((double)wc/(double)w);
+    	double tf = (riskwordcount+1)*1.0/(wordcount+riskwordtotalcount);
     	
     	res.set(0,record.getString("risk"));
     	res.set(1,record.getString("word"));
-    	res.set(2,minfo);
+    	res.set(2,minfo*tf);
     	res.set(3,riskwordcount);
         context.write(res);
     }
