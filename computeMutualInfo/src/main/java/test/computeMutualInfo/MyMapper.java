@@ -22,8 +22,8 @@ public class MyMapper implements Mapper {
     	Long riskcount = record.getBigint("riskcount");
     	Long riskwordtotalcount = record.getBigint("riskwordtotalcount");
     	Long wordcount = record.getBigint("wordcount");
-    	int totalcount = 87176064;
-    	int word_totalcount = 36684;//record.getBigint("wordtotalcount");
+    	int totalcount =82153155;
+    	int word_totalcount = 14286;//record.getBigint("wordtotalcount");
     	
     	double wc = (double) ((1+riskwordcount)*1.0/(riskwordtotalcount+riskcount));
     	double w = (double) ((1+wordcount)*1.0/(totalcount+word_totalcount));

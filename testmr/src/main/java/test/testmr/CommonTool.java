@@ -61,8 +61,8 @@ public class CommonTool{
     	//String res = "";
     	Document document = Jsoup.parse(html);
     	String text = document.text();
-    	String tString = StringFilter(text);
-    	return tString;
+    	//String tString = StringFilter(text);
+    	return text;
 //    	System.out.println(tString);
 //    	String title = document.title();
 //    	res += title+'\n';

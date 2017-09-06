@@ -19,16 +19,28 @@ public class MyMapper implements Mapper {
     
     
     public void map(long recordNum, Record record, TaskContext context) throws IOException {
-        String w = record.getString("html");
-        String r = CommonTool.parseHtml(w);
-        String id = record.getString("id");
-        String risk = record.getString("risk");
-       // String r = CommonTool.delHTMLTag(w);
-        key.set(0, id);
-        key.set(1, r);
-        key.set(2, risk);
-
-        //System.out.println(sb.toString()); 
+//        String w = record.getString("html");
+//        String r = CommonTool.parseHtml(w);
+//        String id = record.getString("id");
+//        String risk = record.getString("risk");
+//        key.set(0, id);
+//        key.set(1, r);
+//        key.set(2, risk);
+    	
+    	String id = record.getString("id");
+        String risk1 = record.getString("risk1");
+        String risk2 = record.getString("risk2");
+        key.set(0,id);
+        if(risk1.equals(risk2))
+        {
+        	key.set(1,risk1);
+        }
+        else if(risk1.equals("normal") && !risk2.equals("normal")){
+            key.set(1,risk2);
+		}
+        else {
+        	key.set(1,risk1);
+        }
         context.write(key);
     }
 

@@ -24,6 +24,7 @@ select risk,word from mutual_info_out where minfo>threshold and risk="sexy"
 insert into table keywords select risk,word from mutual_info_out where minfo>threshold and risk="sexy"
 
 select distinct word from keywords
+select t.*,t1.label from validtable3 t join label2 t1 on t.risk=t1.risk;
 
 create table total_table_out as select t.risk,t.word,t.riskwordcount,t.riskcount,t.riskwordtotalcount,t.wordcount,b.totalcount,b.wordtotalcount from total_table t full outer join ${t1} b;
 
@@ -56,6 +57,22 @@ select * from test_wordcount_table;
 select t.id,t.word,t.count,t.tf,t.idf,t.tfidf,t1.risk  from ${t1} t join filterout t1 on t.id=t1.id;
 
 select t.id,t.key_value,t1.risk from ${t1} t join filterout t1 on t.id=t1.id;
+insert into table keywordsf select risk,word from minfo_frequency where risk="sexy" r order by r.minfo desc limit 1000;
+insert into table keywordsf select risk,word from minfo_frequency where risk="gambling" r order by r.minfo desc limit 1000;
+insert into table keywordsf select risk,word from minfo_frequency where risk="fake_card" r order by r.minfo desc limit 1000;
+select distinct word from keywordsf;
+
+
+drop table if exists valid_table;
+create table valid_table as select * from ${t1};
+select * from valid_table;
+
+drop table if exists valid_total_table;
+create table valid_total_table as select t.* from ${t} t join valid_table r on t.id=r.id;
+
+select * from valid_total_table;
+
+insert into table keywordsf select risk,word from ${t1};
 
 
 
