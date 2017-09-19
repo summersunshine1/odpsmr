@@ -12,10 +12,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements; 
+import org.apache.commons.io.filefilter.AndFileFilter;
+import org.bouncycastle.LICENSE;
+
+//import org.jsoup.Jsoup;
+//import org.jsoup.nodes.Document;
+//import org.jsoup.nodes.Element;
+//import org.jsoup.select.Elements; 
 
 public class CommonTool{ 
     public static String delHTMLTag(String htmlStr){ 
@@ -55,14 +58,33 @@ public class CommonTool{
 		  Matcher   m   =   p.matcher(str);     
 		  return   m.replaceAll(" ").trim();     
     }
+    public   static   String filter(String   str)   throws   PatternSyntaxException   {     
+		  //String regEx="[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";  
+//		  String regEx = "[^\\u4e00-\\u9fa5]";
+    	  String regEx = "[0-9]+";
+		  Pattern p = Pattern.compile(regEx);     
+		  Matcher   m   =   p.matcher(str);     
+//		  return   m.replaceAll(" ").trim();    
+    	  StringBuilder result = new StringBuilder();
+
+          while(m.find()){
+        	  if( m.group(0).length()>=2 && m.group(0).length()!=4)
+			  {
+                  result.append("|" + m.group(0));
+			  }
+
+          }
+          return result.toString();
+  }
 
     public static String parseHtml(String html)
     {
     	//String res = "";
-    	Document document = Jsoup.parse(html);
-    	String text = document.text();
-    	//String tString = StringFilter(text);
-    	return text;
+//    	Document document = Jsoup.parse(html);
+//    	String text = document.text();
+    	String tString = filter(html);
+    	
+    	return tString;
 //    	System.out.println(tString);
 //    	String title = document.title();
 //    	res += title+'\n';

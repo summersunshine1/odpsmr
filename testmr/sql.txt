@@ -73,6 +73,8 @@ create table valid_total_table as select t.* from ${t} t join valid_table r on t
 select * from valid_total_table;
 
 insert into table keywordsf select risk,word from ${t1};
+ select t.id from w_testwordcount t left outer join ${t1} r on t.id=r.id where r.id is null;
+select * from w_normalid;
 
 
 

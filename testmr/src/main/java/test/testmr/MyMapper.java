@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+import org.bouncycastle.LICENSE;
+
 /**
  * Mapper模板。请用真实逻辑替换模板内容
  */
@@ -31,12 +33,32 @@ public class MyMapper implements Mapper {
     public void map(long recordNum, Record record, TaskContext context) throws IOException {
 //        String w = record.getString("html");
 //        String r = CommonTool.parseHtml(w);
+//        if(r.length()==0)
+//        {
+//        	r="-";
+//        	System.out.println(w);
+//        }
 //        String id = record.getString("id");
 //        String risk = record.getString("risk");
 //        key.set(0, id);
 //        key.set(1, r);
 //        key.set(2, risk);
+////        
 //        context.write(key);
+    	String id =  record.getString("id");
+    	String words = record.getString("html");
+//    	String rString = CommonTool.filter(words);
+//    	if(rString.length()==0)
+//    	{
+//    		rString="-";
+//    	}
+    	key.set(0, id);
+	    key.set(1, CommonTool.parseHtml(words));
+	    context.write(key);
+//	       key.set(2, risk);
+//    	
+    	
+    	
     	
 //    	String id = record.getString("id");
 //        String risk1 = record.getString("risk1");
@@ -95,26 +117,26 @@ public class MyMapper implements Mapper {
 //        key.set(0,id);
 //  
 //        context.write(key);
-    	String id= record.getString("id");
-    	String risk1 = record.getString("risk1");
-    	String risk2 = record.getString("risk2");
-    	String risk3 = record.getString("risk3");
-    	String risk4 = record.getString("risk4");
-    	String risk5 = record.getString("risk5");
-    	String risk6 = record.getString("risk6");
-    	String[] array = {risk1,risk2,risk3,risk4,risk5,risk6};
-    	Map<String,Integer> hm = new HashMap();
-        for(String x:array){
-            if(!hm.containsKey(x)){
-                hm.put(x,1);
-            }else{
-                hm.put(x, hm.get(x)+1);
-            }
-        }
-        Map<String,Integer> map = sortByValue(hm);
-        List<Map.Entry<String,Integer>> list = new LinkedList<Map.Entry<String, Integer>>(map.entrySet());
-        Entry<String, Integer> lastEntry = list.get(list.size()-1);
-        String risk = lastEntry.getKey();
+//    	String id= record.getString("id");
+//    	String risk1 = record.getString("risk1");
+//    	String risk2 = record.getString("risk2");
+//    	String risk3 = record.getString("risk3");
+//    	String risk4 = record.getString("risk4");
+//    	String risk5 = record.getString("risk5");
+//    	String risk6 = record.getString("risk6");
+//    	String[] array = {risk1,risk2,risk3,risk4,risk5,risk6};
+//    	Map<String,Integer> hm = new HashMap();
+//        for(String x:array){
+//            if(!hm.containsKey(x)){
+//                hm.put(x,1);
+//            }else{
+//                hm.put(x, hm.get(x)+1);
+//            }
+//        }
+//        Map<String,Integer> map = sortByValue(hm);
+//        List<Map.Entry<String,Integer>> list = new LinkedList<Map.Entry<String, Integer>>(map.entrySet());
+//        Entry<String, Integer> lastEntry = list.get(list.size()-1);
+//        String risk = lastEntry.getKey();
 //        if(risk==1)
 //        {
 //            key.set(1,"fake_card");
@@ -131,9 +153,9 @@ public class MyMapper implements Mapper {
 //        {
 //            key.set(1,"normal");
 //        }
-        key.set(0,id);
-        key.set(1,risk);
-        context.write(key);
+//        key.set(0,id);
+//        key.set(1,risk);
+//        context.write(key);
  
     }
     public static <K, V extends Comparable<? super V>> Map<K, V> 
